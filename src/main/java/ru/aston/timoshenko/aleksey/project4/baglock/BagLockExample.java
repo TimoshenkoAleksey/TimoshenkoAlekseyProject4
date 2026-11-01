@@ -7,7 +7,12 @@ import java.util.concurrent.CyclicBarrier;
 
 public class BagLockExample {
     // DeepSeek назвал это не livelock, а baglock, несмотря на то, что сам дал такой пример!
+    // Это синхронизированный цикл, а не классический livelock.
+    // Освобождение ресурсов (намерений) номинальное.
+    // Из-за синхронизации циклов, захват невозможен.
     // Потратил на него два дня. Оставлю здесь. Не буду удалять.
+    // Кроме того, этот вариант интернет выдает за livelock.
+
 
     public static void main(String[] args) {
         Thread thread1 = new Thread(new Worker("1", Role.THREAD_ONE));
@@ -43,11 +48,10 @@ public class BagLockExample {
                     setMyIntent(false);
                     barrier.await();
                 } catch (InterruptedException e) {
+                    Thread.currentThread().interrupt();
                     throw new RuntimeException(e);
                 } catch (BrokenBarrierException e) {
                     throw new RuntimeException(e);
-                    // не знаю, как обрабатывать
-                    // потом, может быть, разберусь
                 }
             }
         }

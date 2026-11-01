@@ -36,7 +36,8 @@ public class DeadlockExample {
                     System.out.println(name + " : Согласен в вами, коллега! Это, определенно, дедлок!");
                 }
             } catch (InterruptedException e) {
-                throw new RuntimeException(e);
+                Thread.currentThread().interrupt();
+                return;
             }
             synchronized (lock2) {
                 System.out.println(Thread.currentThread().getName() + " Захватил " + lock1.name);
