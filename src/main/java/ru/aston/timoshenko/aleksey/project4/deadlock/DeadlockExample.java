@@ -40,7 +40,7 @@ public class DeadlockExample {
                 return;
             }
             synchronized (lock2) {
-                System.out.println(Thread.currentThread().getName() + " Захватил " + lock1.name);
+                System.out.println(Thread.currentThread().getName() + " Захватил " + lock2.name);
             }
         }
     }
